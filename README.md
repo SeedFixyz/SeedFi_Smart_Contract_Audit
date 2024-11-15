@@ -30,17 +30,15 @@ reference.
 
 ## Conclusion
 
-Based on our comparison, we conclude that the source and the target are: Nearly identical with a new contract added WELabAMMSwapFactory.
-The majority of changes are:
+Based on our comparison, we conclude that the source and the target are: **Nearly Identical** with a new contract added `WELabAMMSwapFactory`.
 
+The majority of changes are:
 1. Function renames
 2. Variable renames
 3. Fee change
 4. New contract WELabAMMSwapFactory - the added code has been extract to a file in [results/WELabAMMSwapFactory.sol](results/WELabAMMSwapFactory.sol)
 
-With proper execution, the WELabs_AMM_Swap protocol should perform in very similar ways to Uniswap V2.
-
-Target has gone through multiple rounds of security audits. Prior security assessments on target repos can be a good
+With proper execution, the WELabs_AMM_Swap protocol should perform in very similar ways to Uniswap V2. Prior security assessments on target repos can be a good
 reference. Readers of this analysis, based on your security requirements, should determine on their own whether or not
 to directly trust the prior or existing security assessments or audits on target repos.
 
