@@ -1,0 +1,238 @@
+1,3c1
+< /**
+<  *Submitted for verification at Etherscan.io on 2020-05-04
+< */
+---
+> // File: contracts/interfaces/IUniswapV2Pair.sol
+4a3
+> pragma solidity >=0.5.0;
+6,7c5
+< 
+< interface IWELabAMMSwapPair {
+---
+> interface IUniswapV2Pair {
+58c56,60
+< interface IWELabAMMSwapERC20 {
+---
+> // File: contracts/interfaces/IUniswapV2ERC20.sol
+> 
+> pragma solidity >=0.5.0;
+> 
+> interface IUniswapV2ERC20 {
+79a82,85
+> // File: contracts/libraries/SafeMath.sol
+> 
+> pragma solidity =0.5.16;
+> 
+95a102
+> // File: contracts/UniswapV2ERC20.sol
+96a104
+> pragma solidity =0.5.16;
+100c108
+< contract WELabAMMSwapERC20 is IWELabAMMSwapERC20 {
+---
+> contract UniswapV2ERC20 is IUniswapV2ERC20 {
+103,104c111,112
+<     string public constant name = 'WELabAMMSwap-Liquidity Token';
+<     string public constant symbol = 'WELabAMMSwap-LP';
+---
+>     string public constant name = 'Uniswap V2';
+>     string public constant symbol = 'UNI-V2';
+176c184
+<         require(deadline >= block.timestamp, 'WELabAMMSwap: EXPIRED');
+---
+>         require(deadline >= block.timestamp, 'UniswapV2: EXPIRED');
+185c193
+<         require(recoveredAddress != address(0) && recoveredAddress == owner, 'WELabAMMSwap: INVALID_SIGNATURE');
+---
+>         require(recoveredAddress != address(0) && recoveredAddress == owner, 'UniswapV2: INVALID_SIGNATURE');
+189a198,201
+> // File: contracts/libraries/Math.sol
+> 
+> pragma solidity =0.5.16;
+> 
+211a224,232
+> // File: contracts/libraries/UQ112x112.sol
+> 
+> pragma solidity =0.5.16;
+> 
+> // a library for handling binary fixed point numbers (https://en.wikipedia.org/wiki/Q_(number_format))
+> 
+> // range: [0, 2**112 - 1]
+> // resolution: 1 / 2**112
+> 
+225a247,250
+> // File: contracts/interfaces/IERC20.sol
+> 
+> pragma solidity >=0.5.0;
+> 
+241a267
+> // File: contracts/interfaces/IUniswapV2Factory.sol
+242a269
+> pragma solidity >=0.5.0;
+244,246c271
+< pragma solidity =0.5.16;
+< 
+< interface IWELabAMMSwapFactory {
+---
+> interface IUniswapV2Factory {
+262,263c287,292
+< interface IWELabAMMSwapCallee {
+<     function welabAMMSwapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;
+---
+> // File: contracts/interfaces/IUniswapV2Callee.sol
+> 
+> pragma solidity >=0.5.0;
+> 
+> interface IUniswapV2Callee {
+>     function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;
+266c295,306
+< contract WELabAMMSwapPair is IWELabAMMSwapPair, WELabAMMSwapERC20 {
+---
+> // File: contracts/UniswapV2Pair.sol
+> 
+> pragma solidity =0.5.16;
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
+287c327
+<         require(unlocked == 1, 'WELabAMMSwap: LOCKED');
+---
+>         require(unlocked == 1, 'UniswapV2: LOCKED');
+301c341
+<         require(success && (data.length == 0 || abi.decode(data, (bool))), 'WELabAMMSwap: TRANSFER_FAILED');
+---
+>         require(success && (data.length == 0 || abi.decode(data, (bool))), 'UniswapV2: TRANSFER_FAILED');
+322c362
+<         require(msg.sender == factory, 'WELabAMMSwap: FORBIDDEN'); // sufficient check
+---
+>         require(msg.sender == factory, 'UniswapV2: FORBIDDEN'); // sufficient check
+329c369
+<         require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'WELabAMMSwap: OVERFLOW');
+---
+>         require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'UniswapV2: OVERFLOW');
+345c385
+<         address feeTo = IWELabAMMSwapFactory(factory).feeTo();
+---
+>         address feeTo = IUniswapV2Factory(factory).feeTo();
+354c394
+<                     uint denominator = rootK.mul(1).add(rootKLast);
+---
+>                     uint denominator = rootK.mul(5).add(rootKLast);
+376c416
+<             _mint(address(0), MINIMUM_LIQUIDITY); // permanently lock the first MINIMUM_LIQUIDITY tokens
+---
+>            _mint(address(0), MINIMUM_LIQUIDITY); // permanently lock the first MINIMUM_LIQUIDITY tokens
+380c420
+<         require(liquidity > 0, 'WELabAMMSwap: INSUFFICIENT_LIQUIDITY_MINTED');
+---
+>         require(liquidity > 0, 'UniswapV2: INSUFFICIENT_LIQUIDITY_MINTED');
+401c441
+<         require(amount0 > 0 && amount1 > 0, 'WELabAMMSwap: INSUFFICIENT_LIQUIDITY_BURNED');
+---
+>         require(amount0 > 0 && amount1 > 0, 'UniswapV2: INSUFFICIENT_LIQUIDITY_BURNED');
+415c455
+<         require(amount0Out > 0 || amount1Out > 0, 'WELabAMMSwap: INSUFFICIENT_OUTPUT_AMOUNT');
+---
+>         require(amount0Out > 0 || amount1Out > 0, 'UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT');
+417c457
+<         require(amount0Out < _reserve0 && amount1Out < _reserve1, 'WELabAMMSwap: INSUFFICIENT_LIQUIDITY');
+---
+>         require(amount0Out < _reserve0 && amount1Out < _reserve1, 'UniswapV2: INSUFFICIENT_LIQUIDITY');
+422,429c462,469
+<             address _token0 = token0;
+<             address _token1 = token1;
+<             require(to != _token0 && to != _token1, 'WELabAMMSwap: INVALID_TO');
+<             if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens
+<             if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
+<             if (data.length > 0) IWELabAMMSwapCallee(to).welabAMMSwapV2Call(msg.sender, amount0Out, amount1Out, data);
+<             balance0 = IERC20(_token0).balanceOf(address(this));
+<             balance1 = IERC20(_token1).balanceOf(address(this));
+---
+>         address _token0 = token0;
+>         address _token1 = token1;
+>         require(to != _token0 && to != _token1, 'UniswapV2: INVALID_TO');
+>         if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens
+>         if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
+>         if (data.length > 0) IUniswapV2Callee(to).uniswapV2Call(msg.sender, amount0Out, amount1Out, data);
+>         balance0 = IERC20(_token0).balanceOf(address(this));
+>         balance1 = IERC20(_token1).balanceOf(address(this));
+433c473
+<         require(amount0In > 0 || amount1In > 0, 'WELabAMMSwap: INSUFFICIENT_INPUT_AMOUNT');
+---
+>         require(amount0In > 0 || amount1In > 0, 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT');
+435,437c475,477
+<             uint balance0Adjusted = balance0.mul(1000).sub(amount0In.mul(5));
+<             uint balance1Adjusted = balance1.mul(1000).sub(amount1In.mul(5));
+<             require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'WELabAMMSwap: K');
+---
+>         uint balance0Adjusted = balance0.mul(1000).sub(amount0In.mul(3));
+>         uint balance1Adjusted = balance1.mul(1000).sub(amount1In.mul(3));
+>         require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'UniswapV2: K');
+456,512c496
+< }
+< 
+< contract WELabAMMSwapFactory is IWELabAMMSwapFactory {
+<     address public feeTo;
+<     address public feeToSetter;
+<     bytes32 public constant INIT_CODE_PAIR_HASH = keccak256(abi.encodePacked(type(WELabAMMSwapPair).creationCode));
+< 
+<     mapping(address => mapping(address => address)) public getPair;
+<     address[] public allPairs;
+< 
+<     event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+< 
+<     constructor(address _feeToSetter) public {
+<         feeToSetter = _feeToSetter;
+<     }
+< 
+<     function allPairsLength() external view returns (uint) {
+<         return allPairs.length;
+<     }
+< 
+<     function createPair(address tokenA, address tokenB) external returns (address pair) {
+<         require(tokenA != tokenB, 'WELabAMMSwap: IDENTICAL_ADDRESSES');
+<         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
+<         require(token0 != address(0), 'WELabAMMSwap: ZERO_ADDRESS');
+<         require(getPair[token0][token1] == address(0), 'WELabAMMSwap: PAIR_EXISTS'); // single check is sufficient
+<         bytes memory bytecode = type(WELabAMMSwapPair).creationCode;
+<         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
+<         assembly {
+<             pair := create2(0, add(bytecode, 32), mload(bytecode), salt)
+<         }
+<         IWELabAMMSwapPair(pair).initialize(token0, token1);
+<         getPair[token0][token1] = pair;
+<         getPair[token1][token0] = pair; // populate mapping in the reverse direction
+<         allPairs.push(pair);
+<         emit PairCreated(token0, token1, pair, allPairs.length);
+<     }
+< 
+<     function setFeeTo(address _feeTo) external {
+<         require(msg.sender == feeToSetter, 'WELabAMMSwap: FORBIDDEN');
+<         feeTo = _feeTo;
+<     }
+< 
+<     function setFeeToSetter(address _feeToSetter) external {
+<         require(msg.sender == feeToSetter, 'WELabAMMSwap: FORBIDDEN');
+<         feeToSetter = _feeToSetter;
+<     }
+< }
+< 
+< 
+< 
+< 
+< 
+< // a library for handling binary fixed point numbers (https://en.wikipedia.org/wiki/Q_(number_format))
+< 
+< // range: [0, 2**112 - 1]
+< // resolution: 1 / 2**112
+< 
+---
+> }
+\ No newline at end of file

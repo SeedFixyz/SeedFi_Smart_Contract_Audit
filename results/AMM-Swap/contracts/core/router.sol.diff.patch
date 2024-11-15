@@ -1,0 +1,463 @@
+1,4d0
+< /**
+<  *Submitted for verification at Etherscan.io on 2020-06-05
+< */
+< 
+7c3
+< interface IWELabAMMSwapFactory {
+---
+> interface IUniswapV2Factory {
+23c19
+< interface IWELabAMMSwapPair {
+---
+> interface IUniswapV2Pair {
+74c70
+< interface IWELabAMMSwapRouter01 {
+---
+> interface IUniswapV2Router01 {
+147,149c143,145
+<     external
+<     payable
+<     returns (uint[] memory amounts);
+---
+>         external
+>         payable
+>         returns (uint[] memory amounts);
+151,152c147,148
+<     external
+<     returns (uint[] memory amounts);
+---
+>         external
+>         returns (uint[] memory amounts);
+154,155c150,151
+<     external
+<     returns (uint[] memory amounts);
+---
+>         external
+>         returns (uint[] memory amounts);
+157,159c153,155
+<     external
+<     payable
+<     returns (uint[] memory amounts);
+---
+>         external
+>         payable
+>         returns (uint[] memory amounts);
+168c164
+< interface IWELabAMMSwapRouter02 is IWELabAMMSwapRouter01 {
+---
+> interface IUniswapV2Router02 is IUniswapV2Router01 {
+231c227
+< contract WELabAMMSwapRouter02 is IWELabAMMSwapRouter02 {
+---
+> contract UniswapV2Router02 is IUniswapV2Router02 {
+238c234
+<         require(deadline >= block.timestamp, 'WELabAMMSwapRouter: EXPIRED');
+---
+>         require(deadline >= block.timestamp, 'UniswapV2Router: EXPIRED');
+261,262c257,258
+<         if (IWELabAMMSwapFactory(factory).getPair(tokenA, tokenB) == address(0)) {
+<             IWELabAMMSwapFactory(factory).createPair(tokenA, tokenB);
+---
+>         if (IUniswapV2Factory(factory).getPair(tokenA, tokenB) == address(0)) {
+>             IUniswapV2Factory(factory).createPair(tokenA, tokenB);
+264c260
+<         (uint reserveA, uint reserveB) = WELabAMMSwapLibrary.getReserves(factory, tokenA, tokenB);
+---
+>         (uint reserveA, uint reserveB) = UniswapV2Library.getReserves(factory, tokenA, tokenB);
+268c264
+<             uint amountBOptimal = WELabAMMSwapLibrary.quote(amountADesired, reserveA, reserveB);
+---
+>             uint amountBOptimal = UniswapV2Library.quote(amountADesired, reserveA, reserveB);
+270c266
+<                 require(amountBOptimal >= amountBMin, 'WELabAMMSwapRouter: INSUFFICIENT_B_AMOUNT');
+---
+>                 require(amountBOptimal >= amountBMin, 'UniswapV2Router: INSUFFICIENT_B_AMOUNT');
+273c269
+<                 uint amountAOptimal = WELabAMMSwapLibrary.quote(amountBDesired, reserveB, reserveA);
+---
+>                 uint amountAOptimal = UniswapV2Library.quote(amountBDesired, reserveB, reserveA);
+275c271
+<                 require(amountAOptimal >= amountAMin, 'WELabAMMSwapRouter: INSUFFICIENT_A_AMOUNT');
+---
+>                 require(amountAOptimal >= amountAMin, 'UniswapV2Router: INSUFFICIENT_A_AMOUNT');
+291c287
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, tokenA, tokenB);
+---
+>         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
+294c290
+<         liquidity = IWELabAMMSwapPair(pair).mint(to);
+---
+>         liquidity = IUniswapV2Pair(pair).mint(to);
+312c308
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, token, WETH);
+---
+>         address pair = UniswapV2Library.pairFor(factory, token, WETH);
+316c312
+<         liquidity = IWELabAMMSwapPair(pair).mint(to);
+---
+>         liquidity = IUniswapV2Pair(pair).mint(to);
+331,334c327,330
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, tokenA, tokenB);
+<         require(IWELabAMMSwapPair(pair).transferFrom(msg.sender, pair, liquidity), 'WELabAMMSwapRouter:fail to receive liquidity'); // send liquidity to pair
+<         (uint amount0, uint amount1) = IWELabAMMSwapPair(pair).burn(to);
+<         (address token0,) = WELabAMMSwapLibrary.sortTokens(tokenA, tokenB);
+---
+>         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
+>         IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
+>         (uint amount0, uint amount1) = IUniswapV2Pair(pair).burn(to);
+>         (address token0,) = UniswapV2Library.sortTokens(tokenA, tokenB);
+336,337c332,333
+<         require(amountA >= amountAMin, 'WELabAMMSwapRouter: INSUFFICIENT_A_AMOUNT');
+<         require(amountB >= amountBMin, 'WELabAMMSwapRouter: INSUFFICIENT_B_AMOUNT');
+---
+>         require(amountA >= amountAMin, 'UniswapV2Router: INSUFFICIENT_A_AMOUNT');
+>         require(amountB >= amountBMin, 'UniswapV2Router: INSUFFICIENT_B_AMOUNT');
+370c366
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, tokenA, tokenB);
+---
+>         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
+372c368
+<         IWELabAMMSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+---
+>         IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+384c380
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, token, WETH);
+---
+>         address pair = UniswapV2Library.pairFor(factory, token, WETH);
+386c382
+<         IWELabAMMSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+---
+>         IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+421c417
+<         address pair = WELabAMMSwapLibrary.pairFor(factory, token, WETH);
+---
+>         address pair = UniswapV2Library.pairFor(factory, token, WETH);
+423c419
+<         IWELabAMMSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+---
+>         IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+434c430
+<             (address token0,) = WELabAMMSwapLibrary.sortTokens(input, output);
+---
+>             (address token0,) = UniswapV2Library.sortTokens(input, output);
+437,438c433,434
+<             address to = i < path.length - 2 ? WELabAMMSwapLibrary.pairFor(factory, output, path[i + 2]) : _to;
+<             IWELabAMMSwapPair(WELabAMMSwapLibrary.pairFor(factory, input, output)).swap(
+---
+>             address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;
+>             IUniswapV2Pair(UniswapV2Library.pairFor(factory, input, output)).swap(
+450,451c446,447
+<         amounts = WELabAMMSwapLibrary.getAmountsOut(factory, amountIn, path);
+<         require(amounts[amounts.length - 1] >= amountOutMin, 'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
+---
+>         amounts = UniswapV2Library.getAmountsOut(factory, amountIn, path);
+>         require(amounts[amounts.length - 1] >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
+453c449
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]
+464,465c460,461
+<         amounts = WELabAMMSwapLibrary.getAmountsIn(factory, amountOut, path);
+<         require(amounts[0] <= amountInMax, 'WELabAMMSwapRouter: EXCESSIVE_INPUT_AMOUNT');
+---
+>         amounts = UniswapV2Library.getAmountsIn(factory, amountOut, path);
+>         require(amounts[0] <= amountInMax, 'UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
+467c463
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]
+472,477c468,473
+<     external
+<     virtual
+<     override
+<     payable
+<     ensure(deadline)
+<     returns (uint[] memory amounts)
+---
+>         external
+>         virtual
+>         override
+>         payable
+>         ensure(deadline)
+>         returns (uint[] memory amounts)
+479,481c475,477
+<         require(path[0] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+<         amounts = WELabAMMSwapLibrary.getAmountsOut(factory, msg.value, path);
+<         require(amounts[amounts.length - 1] >= amountOutMin, 'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
+---
+>         require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+>         amounts = UniswapV2Library.getAmountsOut(factory, msg.value, path);
+>         require(amounts[amounts.length - 1] >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
+483c479
+<         assert(IWETH(WETH).transfer(WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
+---
+>         assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]));
+487,491c483,487
+<     external
+<     virtual
+<     override
+<     ensure(deadline)
+<     returns (uint[] memory amounts)
+---
+>         external
+>         virtual
+>         override
+>         ensure(deadline)
+>         returns (uint[] memory amounts)
+493,495c489,491
+<         require(path[path.length - 1] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+<         amounts = WELabAMMSwapLibrary.getAmountsIn(factory, amountOut, path);
+<         require(amounts[0] <= amountInMax, 'WELabAMMSwapRouter: EXCESSIVE_INPUT_AMOUNT');
+---
+>         require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+>         amounts = UniswapV2Library.getAmountsIn(factory, amountOut, path);
+>         require(amounts[0] <= amountInMax, 'UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
+497c493
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]
+504,508c500,504
+<     external
+<     virtual
+<     override
+<     ensure(deadline)
+<     returns (uint[] memory amounts)
+---
+>         external
+>         virtual
+>         override
+>         ensure(deadline)
+>         returns (uint[] memory amounts)
+510,512c506,508
+<         require(path[path.length - 1] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+<         amounts = WELabAMMSwapLibrary.getAmountsOut(factory, amountIn, path);
+<         require(amounts[amounts.length - 1] >= amountOutMin, 'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
+---
+>         require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+>         amounts = UniswapV2Library.getAmountsOut(factory, amountIn, path);
+>         require(amounts[amounts.length - 1] >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
+514c510
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]
+521,526c517,522
+<     external
+<     virtual
+<     override
+<     payable
+<     ensure(deadline)
+<     returns (uint[] memory amounts)
+---
+>         external
+>         virtual
+>         override
+>         payable
+>         ensure(deadline)
+>         returns (uint[] memory amounts)
+528,530c524,526
+<         require(path[0] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+<         amounts = WELabAMMSwapLibrary.getAmountsIn(factory, amountOut, path);
+<         require(amounts[0] <= msg.value, 'WELabAMMSwapRouter: EXCESSIVE_INPUT_AMOUNT');
+---
+>         require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+>         amounts = UniswapV2Library.getAmountsIn(factory, amountOut, path);
+>         require(amounts[0] <= msg.value, 'UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
+532c528
+<         assert(IWETH(WETH).transfer(WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
+---
+>         assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]));
+543,544c539,540
+<             (address token0,) = WELabAMMSwapLibrary.sortTokens(input, output);
+<             IWELabAMMSwapPair pair = IWELabAMMSwapPair(WELabAMMSwapLibrary.pairFor(factory, input, output));
+---
+>             (address token0,) = UniswapV2Library.sortTokens(input, output);
+>             IUniswapV2Pair pair = IUniswapV2Pair(UniswapV2Library.pairFor(factory, input, output));
+548,551c544,547
+<                 (uint reserve0, uint reserve1,) = pair.getReserves();
+<                 (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
+<                 amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
+<                 amountOutput = WELabAMMSwapLibrary.getAmountOut(amountInput, reserveInput, reserveOutput);
+---
+>             (uint reserve0, uint reserve1,) = pair.getReserves();
+>             (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
+>             amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
+>             amountOutput = UniswapV2Library.getAmountOut(amountInput, reserveInput, reserveOutput);
+554c550
+<             address to = i < path.length - 2 ? WELabAMMSwapLibrary.pairFor(factory, output, path[i + 2]) : _to;
+---
+>             address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;
+566c562
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amountIn
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn
+572c568
+<             'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT'
+---
+>             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
+581,585c577,581
+<     external
+<     virtual
+<     override
+<     payable
+<     ensure(deadline)
+---
+>         external
+>         virtual
+>         override
+>         payable
+>         ensure(deadline)
+587c583
+<         require(path[0] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+---
+>         require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+590c586
+<         assert(IWETH(WETH).transfer(WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amountIn));
+---
+>         assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn));
+595c591
+<             'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT'
+---
+>             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
+605,608c601,604
+<     external
+<     virtual
+<     override
+<     ensure(deadline)
+---
+>         external
+>         virtual
+>         override
+>         ensure(deadline)
+610c606
+<         require(path[path.length - 1] == WETH, 'WELabAMMSwapRouter: INVALID_PATH');
+---
+>         require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+612c608
+<             path[0], msg.sender, WELabAMMSwapLibrary.pairFor(factory, path[0], path[1]), amountIn
+---
+>             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn
+616c612
+<         require(amountOut >= amountOutMin, 'WELabAMMSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
+---
+>         require(amountOut >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
+623c619
+<         return WELabAMMSwapLibrary.quote(amountA, reserveA, reserveB);
+---
+>         return UniswapV2Library.quote(amountA, reserveA, reserveB);
+627,631c623,627
+<     public
+<     pure
+<     virtual
+<     override
+<     returns (uint amountOut)
+---
+>         public
+>         pure
+>         virtual
+>         override
+>         returns (uint amountOut)
+633c629
+<         return WELabAMMSwapLibrary.getAmountOut(amountIn, reserveIn, reserveOut);
+---
+>         return UniswapV2Library.getAmountOut(amountIn, reserveIn, reserveOut);
+637,641c633,637
+<     public
+<     pure
+<     virtual
+<     override
+<     returns (uint amountIn)
+---
+>         public
+>         pure
+>         virtual
+>         override
+>         returns (uint amountIn)
+643c639
+<         return WELabAMMSwapLibrary.getAmountIn(amountOut, reserveIn, reserveOut);
+---
+>         return UniswapV2Library.getAmountIn(amountOut, reserveIn, reserveOut);
+647,651c643,647
+<     public
+<     view
+<     virtual
+<     override
+<     returns (uint[] memory amounts)
+---
+>         public
+>         view
+>         virtual
+>         override
+>         returns (uint[] memory amounts)
+653c649
+<         return WELabAMMSwapLibrary.getAmountsOut(factory, amountIn, path);
+---
+>         return UniswapV2Library.getAmountsOut(factory, amountIn, path);
+657,661c653,657
+<     public
+<     view
+<     virtual
+<     override
+<     returns (uint[] memory amounts)
+---
+>         public
+>         view
+>         virtual
+>         override
+>         returns (uint[] memory amounts)
+663c659
+<         return WELabAMMSwapLibrary.getAmountsIn(factory, amountOut, path);
+---
+>         return UniswapV2Library.getAmountsIn(factory, amountOut, path);
+683c679
+< library WELabAMMSwapLibrary {
+---
+> library UniswapV2Library {
+688c684
+<         require(tokenA != tokenB, 'WELabAMMSwapLibrary: IDENTICAL_ADDRESSES');
+---
+>         require(tokenA != tokenB, 'UniswapV2Library: IDENTICAL_ADDRESSES');
+690c686
+<         require(token0 != address(0), 'WELabAMMSwapLibrary: ZERO_ADDRESS');
+---
+>         require(token0 != address(0), 'UniswapV2Library: ZERO_ADDRESS');
+700c696
+<                 hex'efaba90dbe2755d23f7f97e84dc627ee8b0878d290062baa91f737f56e71b6ce' // init code hash
+---
+>                 hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash
+707c703
+<         (uint reserve0, uint reserve1,) = IWELabAMMSwapPair(pairFor(factory, tokenA, tokenB)).getReserves();
+---
+>         (uint reserve0, uint reserve1,) = IUniswapV2Pair(pairFor(factory, tokenA, tokenB)).getReserves();
+713,714c709,710
+<         require(amountA > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_AMOUNT');
+<         require(reserveA > 0 && reserveB > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_LIQUIDITY');
+---
+>         require(amountA > 0, 'UniswapV2Library: INSUFFICIENT_AMOUNT');
+>         require(reserveA > 0 && reserveB > 0, 'UniswapV2Library: INSUFFICIENT_LIQUIDITY');
+720,722c716,718
+<         require(amountIn > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_INPUT_AMOUNT');
+<         require(reserveIn > 0 && reserveOut > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_LIQUIDITY');
+<         uint amountInWithFee = amountIn.mul(995);
+---
+>         require(amountIn > 0, 'UniswapV2Library: INSUFFICIENT_INPUT_AMOUNT');
+>         require(reserveIn > 0 && reserveOut > 0, 'UniswapV2Library: INSUFFICIENT_LIQUIDITY');
+>         uint amountInWithFee = amountIn.mul(997);
+730,731c726,727
+<         require(amountOut > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_OUTPUT_AMOUNT');
+<         require(reserveIn > 0 && reserveOut > 0, 'WELabAMMSwapLibrary: INSUFFICIENT_LIQUIDITY');
+---
+>         require(amountOut > 0, 'UniswapV2Library: INSUFFICIENT_OUTPUT_AMOUNT');
+>         require(reserveIn > 0 && reserveOut > 0, 'UniswapV2Library: INSUFFICIENT_LIQUIDITY');
+733c729
+<         uint denominator = reserveOut.sub(amountOut).mul(995);
+---
+>         uint denominator = reserveOut.sub(amountOut).mul(997);
+739c735
+<         require(path.length >= 2, 'WELabAMMSwapLibrary: INVALID_PATH');
+---
+>         require(path.length >= 2, 'UniswapV2Library: INVALID_PATH');
+750c746
+<         require(path.length >= 2, 'WELabAMMSwapLibrary: INVALID_PATH');
+---
+>         require(path.length >= 2, 'UniswapV2Library: INVALID_PATH');
